@@ -1,0 +1,68 @@
+---
+layout: default
+---
+<div class="row">
+    <div class="content col-lg-10">
+        <div class="sheet post">
+            <header>
+                <h2>{{ page.title }}</h2>
+                <p class="post-meta">
+                    <span class="octicon octicon-clock"></span> {{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}
+                </p>
+                <p class="post-tag">
+                    <span>{% for cat in page.categories %}
+                        <a href="{{ '/category' | relative_url }}/#{{ cat }}"><span class="octicon octicon-list-unordered"></span>&nbsp;{{ cat }}</a>
+                        {% endfor %}
+                    </span>
+                    <span>{% for tag in page.tags %}
+                        <a class="word-keep" href="{{ '/tags' | relative_url }}/#{{ tag }}"><span class="octicon octicon-tag"></span>&nbsp;{{ tag }}</a>
+                        {% endfor %}
+                    </span>
+                </p>
+            </header>
+            <hr class="boundary">
+            <article>
+                {{content}}
+            </article>
+            <hr class="boundary">
+            <div class="post-nav" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <p style="flex: 1 1 0; width: 45%; padding-right: 0.5em;">
+                    {% if page.previous.url %}
+                    <a href="{{ page.previous.url | relative_url }}">&#8672;&nbsp;{{page.previous.title}}</a>
+                    {% endif %}
+                </p>
+                <p style="flex: 1 1 0; width: 45%; padding-left: 0.5em; text-align: right">
+                    {% if page.next.url %}
+                    <a href="{{ page.next.url | relative_url }}">{{page.next.title}}&nbsp;&#8674;</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="content-navigation col-lg-2">
+        <div class="affix" style="font-size:medium">
+            <div class="shadow-bottom-center">
+                <div class="content-navigation-toc">
+                    <div class="content-navigation-header">
+                        <span class="octicon octicon-list-unordered"></span>&nbsp;Toc
+                    </div>
+                    <div class="content-navigation-list toc"></div>
+                </div>
+                <div class="content-navigation-tag">
+                    <div class="content-navigation-header">
+                        <span class="octicon octicon-list-unordered"></span>&nbsp;Tags
+                    </div>
+                    <div class="content-navigation-list">
+                        <ul>
+                            {% for tag in page.tags %}
+                            <li>
+                                <a href="{{ '/tags' | relative_url }}/#{{ tag }}"><span class="octicon octicon-tag"></span>&nbsp;{{ tag }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

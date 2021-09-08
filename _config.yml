@@ -1,0 +1,37 @@
+title: "jtcheng"
+url: https://github.com/jtcheng
+baseurl: /blog
+repository: jtcheng/blog
+
+permalink: /:categories/:title/
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+
+# Set a custom excerpt separator to override what is rendered for each post on the index page.
+excerpt_separator: <!-- more -->
+
+# Files to exclude from site conversion.
+exclude: [
+  "serve.sh", 
+  "clean.sh"
+]
+
+paginate: 6
+paginate_path: "page/:num"
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      styles : [post.css]
+      scripts : [post.js]

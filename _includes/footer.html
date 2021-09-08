@@ -1,0 +1,15 @@
+<footer class="footnote footnote-tiffany">
+    <div class="container">
+        <a class="foot-item" href="{{ site.github.owner_url }}" target="_blank"><span class="octicon octicon-mark-github"></span></a>
+        <a class="foot-item" href="{{ '/feed.xml' | relative_url }}" target="_blank"><span class="octicon octicon-rss"></span></a>
+        <a class="foot-item" href="{{ '/link/' | relative_url }}"><span class="octicon octicon-link-external"></span></a>
+        &nbsp;
+        <a href="{{ site.github.owner_url }}"><span class="word-keep">&copy;{{ site.github.owner_name }}</span></a>
+    </div>
+</footer>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ '/static/js/script.js' | relative_url }}"></script>
+{% for script in page.scripts %}
+<script type="text/javascript" src="{{ '/static/js/' | append:script | relative_url }}"></script>
+{%endfor%}
