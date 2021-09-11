@@ -2,10 +2,10 @@
 layout: post
 title: GitHub 协同工作
 tags: [git, github]
-categories: [teamwork]
+categories: [basic skills]
 ---
 
-`Git`与`GitHub`基本上是现代软件开发的标准工具与模式，是每个开发者都需要掌握的，尤其是在一个较大的团队中协同工作的时候，熟练地使用好它们，能使得我们的开发工作更加高效，可控。另外，掌握它们，我们就可以更自然地参与到一些自己感兴趣开源项目，融入开源世界。
+`Git`与`GitHub`基本上是现代软件开发的标准工具与协作模式，是每个开发者都需要掌握的，尤其是在一个较大的团队中协同工作的时候，熟练地使用它们，能使我们的开发工作更加高效、可控。另外，掌握它们，我们就可以更熟练地参与到一些自己感兴趣开源项目中去，融入开源世界。
 
 <!-- more -->
 * TOC
@@ -13,14 +13,14 @@ categories: [teamwork]
 
 ## Git
 
-`Git`是一款免费、开源的分布式版本控制系统。
+`Git`是一款免费、开源的分布式版本控制管理系统。
 
 ### Git学习资源
 
-关于`Git`介绍，安装，原理等，这里不做过多介绍，初学者可以结合下面的资源来了解:
+关于`Git`介绍、安装、原理等，这里不做过多介绍，初学者可以结合下面的资源来了解:
 
-- [Pro Git](https://git-scm.com/book)
-- [Learn Git Branching](https://pcottle.github.io/learnGitBranching)
+- [Pro Git][1]
+- [Learn Git Branching][2]
 
 ### Git命令备忘录
 
@@ -232,7 +232,8 @@ git archive --output "v1.0.tar.gz" main
 ```
 
 ## GitHub
-`Github`是用`Git`做版本控制的代码托管平台，一般协同开发都是围绕`GitHub`来进行的。
+
+`Github`是使用`Git`做版本控制的代码托管平台，一般团队协同开发都是围绕`GitHub`来进行的。
 
 ### 企业内部项目开发
 
@@ -277,11 +278,11 @@ B. `GitHub`站点操作: (有些操作是需要反复进行的)
 
 ### 开源项目开发
 
-参与企业外部的开源项目开发，代码仓库对于外部开发者来说一般都是没写入权限的，因此我们需要`fork`项目到自己的账号下面，账号需要事先在`GitHub`上面创建。
+企业外部的开源项目开发，代码仓库对于外部开发者来说一般都是没写入权限的，因此我们需要`fork`项目到自己的公开账号下面，账号需要事先在`GitHub`上面创建。
 
 具体的步骤如下: (举一个例子)
 
-A. 在[tdengine](https://github.com/taosdata/TDengine)的`GitHub`主页上面`fork`该项目到自己的账号下面
+A. 在[tdengine][3]的`GitHub`主页上面`fork`该项目到自己的账号下面
 
 B. `Git`本地操作
 
@@ -332,3 +333,7 @@ C. `GitHub`站点操作: (有些操作是需要反复进行的)
   3. 修改代码评审意见，重新push工作分支
   4. 合并工作分支到主开发分支 (选择`squash and merge`，可能没有操作权限)
   5. 删除工作分支
+
+[1]: https://git-scm.com/book
+[2]: https://pcottle.github.io/learnGitBranching
+[3]: https://github.com/taosdata/TDengine
