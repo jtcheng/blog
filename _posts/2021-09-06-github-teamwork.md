@@ -24,7 +24,7 @@ categories: [basic skills]
 
 ### Git命令备忘录
 
-#### 1. 配置操作
+#### 配置操作
 
 ```shell
 # 全局配置(~.gitconfig)
@@ -44,7 +44,7 @@ git config --global pull.rebase true
 $ git config user.email "jtcheng@cqu.edu.cn"
 ```
 
-#### 2. 新建仓库操作
+#### 新建仓库操作
 
 ```shell
 # 在当前目录新建一个Git仓库
@@ -57,7 +57,7 @@ $ git init repo-name
 $ git clone url
 ```
 
-#### 3. 分支操作
+#### 分支操作
 
 ```shell
 # 列出本地分支(-r: 远程分支, -a: 所有分支)
@@ -97,7 +97,7 @@ $ git branch -d branch-name
 $ git push origin -d branch-name
 ```
 
-#### 4. 文件操作
+#### 文件操作
 
 ```shell
 # 增加文件
@@ -138,7 +138,7 @@ $ git show commit[:filename]
 $ git blame filename
 ```
 
-#### 5. 撤销与暂存操作
+#### 撤销与暂存操作
 
 ```shell
 # 恢复暂存区的所有文件到工作区
@@ -172,7 +172,7 @@ $ git stash drop stashid
 git fsck --lost-found
 ```
 
-#### 6. 本地提交操作
+#### 本地提交操作
 
 ```shell
 # 提交暂存区到本地仓库区
@@ -186,7 +186,7 @@ $ git commit --amend -m message
 $ git commit --amend file1 [file2 ...]
 ```
 
-#### 7. 远程同步操作
+#### 远程同步操作
 
 ```shell
 # 显示所有远程仓库
@@ -202,7 +202,7 @@ $ git pull [remote] [branch]
 $ git push [-f] [remote] [branch]
 ```
 
-#### 8. 标签操作
+#### 标签操作
 
 ```shell
 # 列出所有tag
@@ -221,7 +221,7 @@ $ git tag -d tag-name
 git push -d origin tag-name
 ```
 
-#### 9. 发布操作
+#### 发布操作
 
 ```shell
 # 列出支持的发布格式
@@ -273,7 +273,7 @@ B. `GitHub`站点操作: (有些操作是需要反复进行的)
   1. 发起合并请求
   2. 发起代码评审
   3. 修改代码评审意见，重新push工作分支
-  4. 合并工作分支到主开发分支 (选择`squash and merge`)
+  4. 合并工作分支到主开发分支(选择`squash and merge`)
   5. 删除工作分支
 
 ### 开源项目开发
@@ -329,9 +329,9 @@ git push origin bugfix/issue
 
 C. `GitHub`站点操作: (有些操作是需要反复进行的)
   1. 发起合并请求
-  2. 发起代码评审 (可能没有操作权限)
+  2. 发起代码评审(可能没有操作权限)
   3. 修改代码评审意见，重新push工作分支
-  4. 合并工作分支到主开发分支 (选择`squash and merge`，可能没有操作权限)
+  4. 合并工作分支到主开发分支(选择`squash and merge`，可能没有操作权限)
   5. 删除工作分支
 
 [1]: https://git-scm.com/book

@@ -1,8 +1,8 @@
 ---
 layout: post
 title: C++ 组件之 Gflags
-tags: [C++, gflags]
-categories: [C++ arsenal]
+tags: [c++, gflags]
+categories: [c++ arsenal]
 ---
 
 `Gflags`是google开源的用于处理命令行参数的项目，相对`getopt`，更强大，更易使用，而且`Gflags`的参数可以按需分散就近定义到多个源文件中，不用集中在main函数文件中，使用非常灵活，另外`Gflags`也能很好的支持参数配置文件。
@@ -14,14 +14,14 @@ categories: [C++ arsenal]
 ## 命令行flags
 
 一般来说，命令行flags可以分为接收参数与不接收参数两类，为了方便处理以及形式上的统一，约定使用下面的格式:
-- `--variable` 或者 `--novariable` 表示不接收参数的flag，表示布尔类型
-  - `--variable` 等价于(不区分大小写):
+- `--variable`或者`--novariable`表示不接收参数的flag，表示布尔类型
+  - `--variable`等价于(不区分大小写)下面的推荐写法:
 
-    `--variable=true`,`--variable=t`,`--variable=yes`,`--variable=y`,`--variable=1`
-  - `--novariable` 等价于(不区分大小写):
+      `--variable=true`,`--variable=t`,`--variable=yes`,`--variable=y`,`--variable=1`
+  - `--novariable`等价于(不区分大小写)下面的推荐写法:
 
-    `--variable=false`,`--variable=f`,`--variable=no`,`--variable=n`,`--variable=0`
-- `--variable=value` 表示接收参数的flag
+      `--variable=false`,`--variable=f`,`--variable=no`,`--variable=n`,`--variable=0`
+- `--variable=value`表示接收参数的flag
 
 ## 命令行flags声明与定义
 
@@ -48,65 +48,43 @@ categories: [C++ arsenal]
 #define DEFINE_string(name, val, txt)
 ```
 
-**内置flag** 不能再次定义，默认就可以直接使用
+**常用的内置flag**不能再次定义，默认就可以直接使用(`./app --help`可以列出所有的flag信息，包括内置flag信息)
+
 ```c++
-// gflags_completions.cc, 命令行自动补齐相关
-DEFINE_string(tab_completion_word, "",
-              "If non-empty, HandleCommandLineCompletions() will hijack the "
-              "process and attempt to do bash-style command line flag "
-              "completion on this value.");
-DEFINE_int32(tab_completion_columns, 80,
-             "Number of columns to use in output for tab completion");
+// gflags_reporting.cc, 帮助与版本信息相关
+DEFINE_bool  (help,    false, "show help on all flags [tip: all flags can have two dashes]");
+DEFINE_bool  (version, false, "show version and build info and exit");
 ```
 
 ```c++
-// gflags_reporting.cc, 报告帮助信息相关
-DEFINE_bool  (help,        false, "show help on all flags [tip: all flags can have two dashes]");
-DEFINE_bool  (helpfull,    false, "show help on all flags -- same as -help");
-DEFINE_bool  (helpshort,   false, "show help on only the main module for this program");
-DEFINE_string(helpon,      "",    "show help on the modules named by this flag value");
-DEFINE_string(helpmatch,   "",    "show help on modules whose name contains the specified substr");
-DEFINE_bool  (helppackage, false, "show help on all modules in the main package");
-DEFINE_bool  (helpxml,     false, "produce an xml version of help");
-DEFINE_bool  (version,     false, "show version and build info and exit");
+// gflags.cc, flag参数来源相关
+DEFINE_string(flagfile, "", "load flags from file");
+DEFINE_string(fromenv,  "", "set flags from the environment"
+                            " [use 'export FLAGS_flag1=value']");
 ```
 
-```c++
-// gflags.cc
-// flag参数来源相关
-DEFINE_string(flagfile,   "", "load flags from file");
-DEFINE_string(fromenv,    "", "set flags from the environment"
-                              " [use 'export FLAGS_flag1=value']");
-DEFINE_string(tryfromenv, "", "set flags from the environment if present");
-// 输入未定义的flag行为
-DEFINE_string(undefok,    "", "comma-separated list of flag names that it is okay to specify "
-                              "on the command line even if the program does not define a flag "
-                              "with that name.  IMPORTANT: flags in this list that have "
-                              "arguments MUST use the flag=value format");
-```
-
-## Gflags 使用案例
+## Gflags使用案例
 
 `Gflags`使用起来比较简单，更多的信息可以参考官方文档:
 - [Gflags github][1]
 - [Gflags reference][2]
 
-### 1. 声明flags
+### 声明flags
 ```c++
 // tgflags.h
 #pragma once
 
-#include <gflags/gflags.h>
+#include "gflags/gflags.h"
 
 // Declare name and age
 DECLARE_string(name);
 DECLARE_uint32(age);
 
-// Declare daemon or not
-DECLARE_bool(daemon);
+// Declare daemonize
+DECLARE_bool(daemonize);
 ```
 
-### 2. 定义，验证，使用flags
+### 定义，验证，使用flags
 ```c++
 // tgflags.cpp
 #include <iostream>
@@ -132,7 +110,7 @@ bool tgflags_isset(const char* flagname) {
 }
 ```
 
-### 3. 定义，使用flags
+### 定义，使用flags
 ```c++
 // main.cpp
 #include <iostream>
@@ -142,10 +120,10 @@ bool tgflags_isset(const char* flagname) {
 extern void tgflags_test(void);
 extern bool tgflags_isset(const char* flagname);
 
-// name of the flag: daemon
+// name of the flag: daemonize
 // default value: true
 // help string: app start as daemon or not
-DEFINE_bool(daemon, true, "app start as daemon or not");
+DEFINE_bool(daemonize, true, "app start as daemon or not");
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello Gflags!" << std::endl;
@@ -159,7 +137,7 @@ int main(int argc, char *argv[]) {
     // remove_flags = false, keeps the flags, maybe reorder the args and flags
     gflags::ParseCommandLineFlags(&argc, &argv, true);
 
-    std::cout << std::boolalpha << FLAGS_daemon << std::endl;
+    std::cout << std::boolalpha << FLAGS_daemonize << std::endl;
     std::cout << fmt::format("{}: your name: {} and age: {}\n", __func__, FLAGS_name, FLAGS_age);
 
     tgflags_test();
@@ -171,7 +149,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-### 4. 使用默认flags
+### 使用默认flags
 ```shell
 $ ./tgflags
 Hello Gflags!
@@ -182,9 +160,9 @@ false
 false
 ```
 
-### 5. 使用命令行flags
+### 使用命令行flags
 ```shell
-$ ./tgflags --nodaemon --age=42
+$ ./tgflags --nodaemonize --age=42
 Hello Gflags!
 false
 main: your name: jtcheng and age: 42
@@ -192,8 +170,8 @@ tgflags_test: your name: jtcheng and age: 42
 false
 true
 
-# for boolean
-$  ./tgflags --daemon=false --age=42
+# for boolean, 推荐的用法
+$ ./tgflags --daemonize=false --age=42
 Hello Gflags!
 false
 main: your name: jtcheng and age: 42
@@ -202,15 +180,15 @@ false
 true
 ```
 
-### 6. 使用环境变量flags
+### 使用环境变量flags
 ```shell
 $ echo $SHELL
 /bin/zsh
 
 $ export FLAGS_age=42
-$ export FLAGS_daemon=false
+$ export FLAGS_daemonize=false
 
-$ ./tgflags --fromenv=age,daemon
+$ ./tgflags --fromenv=age,daemonize
 Hello Gflags!
 false
 main: your name: jtcheng and age: 42
@@ -219,11 +197,11 @@ false
 true
 ```
 
-### 7. 使用flags配置文件
+### 使用flags配置文件
 ```shell
 $ cat t.conf
 # startup as daemon or not
---nodaemon
+--daemonize=false
 # your age
 --age=42
 
@@ -236,28 +214,46 @@ false
 true
 ```
 
-### 8. flag值的保存与恢复
+### Help信息
+```shell
+$ ./tgflags --help
+Hello Gflags!
+tgflags: ./tgflags
+# ... 内置flags的信息，不关心
+  Flags from /Users/jtcheng/work/workspaces/cpp/arsenal/src/tgflags/main.cpp:
+    -daemonize (app start as daemon or not) type: bool default: true
+
+  Flags from /Users/jtcheng/work/workspaces/cpp/arsenal/src/tgflags/tgflags.cpp:
+    -age (your age) type: uint32 default: 33
+    -name (your name) type: string default: "jtcheng"
+
+$ ./tgflags --version
+Hello Gflags!
+tgflags version v0.0.1
+```
+
+### flag值的保存与恢复
 ```c++
 #include <iostream>
 #include "tgflags.h"
 
-DEFINE_bool(daemon, true, "app start as daemon or not");
+DEFINE_bool(daemonize, true, "app start as daemon or not");
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello Gflags!" << std::endl;
 
     gflags::ParseCommandLineFlags(&argc, &argv, true);
 
-    std::cout << std::boolalpha << FLAGS_daemon << std::endl;
-    // change the daemon flag just in below scope
+    std::cout << std::boolalpha << FLAGS_daemonize << std::endl;
+    // change the daemonize flag just in below scope
     // when FlagSaver destroyed, all the value will be restores
     {
         gflags::FlagSaver fs;
-        gflags::SetCommandLineOption("daemon", "false");
-        std::cout << std::boolalpha << FLAGS_daemon << std::endl;
+        gflags::SetCommandLineOption("daemonize", "false");
+        std::cout << std::boolalpha << FLAGS_daemonize << std::endl;
     }
     // the damon flag value will be restores here
-    std::cout << std::boolalpha << FLAGS_daemon << std::endl;
+    std::cout << std::boolalpha << FLAGS_daemonize << std::endl;
 
     return 0;
 }
@@ -268,23 +264,15 @@ int main(int argc, char *argv[]) {
 // true
 ```
 
-### 9. Help信息
-```shell
-$ ./tgflags --help
-Hello Gflags!
-tgflags: ./tgflags
-# ... 内置flags的信息，不关心
-  Flags from /Users/jtcheng/work/workspaces/cpp/arsenal/src/tgflags/main.cpp:
-    -daemon (app start as daemon or not) type: bool default: true
+### 其他
 
-  Flags from /Users/jtcheng/work/workspaces/cpp/arsenal/src/tgflags/tgflags.cpp:
-    -age (your age) type: uint32 default: 33
-    -name (your name) type: string default: "jtcheng"
+下面的宏`STRIP_FLAG_HELP`可以在代码编译的时候，删除help描述信息，有时候为了安全性，有必要这样处理。
 
-$ ./tgflags --version
-Hello Gflags!
-tgflags version v0.0.1
-```
+```c++
+ #define STRIP_FLAG_HELP 1
+ #include <gflags/gflags.h>
+ ```
+
 
 [1]: https://github.com/gflags/gflags
 [2]: https://gflags.github.io/gflags
